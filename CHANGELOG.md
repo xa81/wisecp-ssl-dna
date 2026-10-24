@@ -15,3 +15,6 @@ First release.
 - Renewal as a new order, import of existing certificates by domain, optional revoke on
   cancellation (packages that cannot be revoked do not block it).
 - API key and private keys masked in every log line; TLS verified on every request.
+- Requests Cloudflare could not deliver to the gateway (521/522/523/525/526) are retried.
+- Catalogue tab shows prices in the catalogue currency and explains an empty catalogue.
+- SSL dashboard shows the real key size and signature algorithm.

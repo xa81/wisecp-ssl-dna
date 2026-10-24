@@ -101,6 +101,49 @@
             return $this->catalogue();
         }
 
+        /**
+         * The core table labels the sale price with the system currency although the
+         * catalogue prices (and the products it creates) are in the gateway's currency.
+         */
+        protected function sslCatalogTable(): \WISECP\Components\Table
+        {
+            $table = new \WISECP\Components\Table($this->sslUiId('Catalog'));
+            $money = static fn ($v, $cur) => number_format((float) $v, 2) . ' ' . htmlspecialchars((string) $cur);
+
+            $table->setColumns([
+                'name'   => ['title' => $this->lang['cat-name'] ?? 'Certificate'],
+                'vendor' => ['title' => $this->lang['cat-vendor'] ?? 'Brand', 'attributes' => ['class' => 'text-center'], 'sortable' => false],
+                'type'   => [
+                    'title'      => $this->lang['cat-type'] ?? 'Type',
+                    'attributes' => ['class' => 'text-center'],
+                    'sortable'   => false,
+                    'cellRender' => function ($v) {
+                        $cls = ['DV' => 'text-bg-secondary', 'OV' => 'text-bg-info', 'EV' => 'text-bg-success'][$v] ?? 'text-bg-light';
+                        return '<span class="badge rounded ' . $cls . '">' . htmlspecialchars((string) $v) . '</span>';
+                    },
+                ],
+                'cost'   => ['title' => $this->lang['cat-cost'] ?? 'Cost', 'attributes' => ['class' => 'text-end'], 'sortable' => false],
+                'sale'   => ['title' => $this->lang['cat-sale'] ?? 'Sale', 'attributes' => ['class' => 'text-end'], 'sortable' => false],
+                'status' => ['title' => '', 'attributes' => ['class' => 'text-end'], 'sortable' => false],
+            ]);
+
+            $notImported = htmlspecialchars($this->lang['cat-not-imported'] ?? 'Not imported');
+            $table->setRowRender(static function ($row) use ($notImported, $money) {
+                $cur      = (string) ($row['model']['currency'] ?? '');
+                $imported = (int) ($row['model']['imported'] ?? 0);
+
+                $row['data']['cost']['value']   = $money($row['model']['cost'] ?? 0, $cur);
+                $row['data']['sale']['value']   = $money($row['model']['sale'] ?? 0, $cur);
+                $row['data']['status']['value'] = $imported
+                    ? '<a href="' . \LinkGenerator::admin('products', ['edit'], '', ['id' => $imported]) . '" class="btn btn-sm btn-outline-success"><i class="bi bi-check-circle me-1"></i>#' . $imported . '</a>'
+                    : '<span class="badge rounded text-bg-light text-muted">' . $notImported . '</span>';
+
+                return $row;
+            });
+
+            return $table;
+        }
+
         protected function sslImportIdLabel(): string
         {
             return $this->lang['import-domain'] ?? 'Certificate Domain';

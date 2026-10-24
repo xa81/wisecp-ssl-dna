@@ -8,15 +8,13 @@ Everything for https://wisecp.com/tr/developer/products/new.
 | Category | Provizyon (SSL) |
 | Price | Ücretsiz / Free |
 | License check | None |
-| Version | 1.0.0 |
-| Minimum WISECP version | a WISECP 5 build with the core SSL framework (`SslProductModule`) — set the oldest 5.x build you support |
-| Package | `DNASSL-WiseCP5-v1.0.0.zip` from the release |
+| Version | 1.0.1 |
+| Minimum WISECP version | 5.0-beta.3 |
+| Package | `DNASSL-WiseCP5-v1.0.1.zip` from the V1.0.1 release |
 | Icon | `icon-512.png` |
 
-> Before uploading the package: create the product draft first, then add
-> `coremio/modules/Product/DNASSL/manifest.json` with the draft's id
-> (`{"type":"marketplace","id":<id>,"version":"1.0.0","last_updated":"<date>"}`), commit, release and upload
-> that zip — the same flow as DNAHosting (product 204).
+> Draft: https://wisecp.com/tr/developer/products/207 — manifest.json (id 207) ships since V1.0.1;
+> the uploaded package is `DNASSL-WiseCP5-v1.0.1.zip`, minimum WISECP 5.0-beta.3.
 
 ## Lede / Kısa açıklama
 

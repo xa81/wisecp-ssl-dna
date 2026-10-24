@@ -25,6 +25,7 @@ return [
     'connection-failed'    => 'Connection failed.',
     'missing-credentials'  => 'Reseller ID and API Key are required.',
 
+    'catalog-error'     => 'The Domain Name API catalogue could not be loaded:',
     'cat-import'        => 'Import Catalog',
     'cat-sync'          => 'Sync Prices',
     'cat-rate'          => 'Profit Margin (%)',

@@ -25,6 +25,7 @@ return [
     'connection-failed'    => 'Bağlantı başarısız.',
     'missing-credentials'  => 'Bayi ID ve API Anahtarı gereklidir.',
 
+    'catalog-error'     => 'Domain Name API kataloğu yüklenemedi:',
     'cat-import'        => 'Kataloğu İçe Aktar',
     'cat-sync'          => 'Fiyatları Senkronize Et',
     'cat-rate'          => 'Kâr Marjı (%)',

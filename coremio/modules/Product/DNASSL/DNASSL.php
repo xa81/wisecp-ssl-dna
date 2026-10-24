@@ -38,7 +38,26 @@
 
         public function page_configuration(): string
         {
-            return $this->sslConfigurationTabs();
+            return $this->configurationNotice() . $this->sslConfigurationTabs();
+        }
+
+        /** Says why the catalogue is empty instead of leaving an unexplained blank table. */
+        private function configurationNotice(): string
+        {
+            $s = $this->config['settings'] ?? [];
+            if (empty($s['reseller_id']) || empty($s['api_key'])) {
+                return '<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-1"></i>'
+                    . htmlspecialchars($this->lang['missing-credentials'] ?? 'Reseller ID and API Key are required.') . '</div>';
+            }
+
+            $catalogue = $this->catalogue();
+            if (!$catalogue->fetchCatalog() && $catalogue->apiError() !== '') {
+                return '<div class="alert alert-danger"><i class="bi bi-x-circle me-1"></i>'
+                    . htmlspecialchars(($this->lang['catalog-error'] ?? 'The Domain Name API catalogue could not be loaded:') . ' ' . $catalogue->apiError())
+                    . '</div>';
+            }
+
+            return '';
         }
 
         protected function sslSettingsFields(): array

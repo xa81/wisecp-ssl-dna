@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 — 2026-10-24
+
+- WISECP Marketplace manifest (product 207), so marketplace installs and updates are recognised.
+
 ## 1.0.0 — 2026-10-24
 
 First release.

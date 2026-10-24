@@ -386,6 +386,9 @@
                 }
             }
 
+            // The CSR the client gave, or the one the gateway kept (imported certificates).
+            $key = Normalizer::keyInfo($crt, (string) ($this->requirement_params['csr'] ?? '') ?: (string) ($conf['csr'] ?? ''));
+
             return [
                 'certificate_id'    => $this->certificateId(),
                 'status'            => $status,
@@ -408,8 +411,8 @@
                 'validation_status' => $status === 'active' ? 'validated' : 'pending',
                 'issuer'            => (string) ($detail['packageName'] ?? '') ?: '-',
                 'serial_number'     => $this->certificateId() ?: '-',
-                'signature_algo'    => '-',
-                'key_size'          => 0,
+                'signature_algo'    => $key['signature'] !== '' ? $key['signature'] : '-',
+                'key_size'          => $key['bits'],
                 'crt_code'          => $crt,
                 'ca_code'           => $ca,
                 'minor_status'      => (string) ($detail['status'] ?? ''),
